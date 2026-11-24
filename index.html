@@ -1,85 +1,654 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="S-post, o estúdio de conteúdos da AAUTS: escreve uma vez e publica no Facebook, LinkedIn, WordPress, AVAI, Bluesky, YouTube, Instagram e TikTok, a partir do Windows e do telemóvel Android.">
-  <meta name="referrer" content="no-referrer">
-  <title>S-post — publica em várias redes de uma vez | AAUTS</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S-post — publica em várias redes de uma vez | AAUTS</title>
+<meta name="description" content="S-post, o estúdio de conteúdos da AAUTS: escreve uma vez e publica no Facebook, LinkedIn, WordPress, AVAI, Bluesky, YouTube, Instagram e TikTok, a partir do Windows e do telemóvel Android.">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="media/logo-spost.webp">
+<meta property="og:title" content="S-post — publica em várias redes de uma vez">
+<meta property="og:description" content="Escreve uma vez, adapta a cada rede e publica com a tua confirmação. Windows e Android.">
+<meta property="og:image" content="https://s-post.aauts.pt/media/editor.webp">
+<meta property="og:url" content="https://s-post.aauts.pt/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#141722">
+<style>
+:root{
+  /* cores do S-post: tema escuro do programa (ui/appearance.py), topo do editor e logótipo */
+  --roxo:#6844d4; --roxo2:#beaaff; --lilas:#c9b9ff; --fundo:#141722; --fundo2:#171a26; --cartao:#202536; --lateral:#242137;
+  --ameixa1:#24213e; --ameixa2:#554195; --tinta:#38304f; --texto:#f0f1fa; --suave:#bcc2d9; --borda:rgba(190,170,255,.28); --verde:#86efac;
+  --raio:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;background:var(--fundo);color:var(--texto);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;line-height:1.55;overflow-x:hidden}
+a{color:var(--roxo2)}
+a:focus-visible,button:focus-visible,textarea:focus-visible{outline:3px solid var(--roxo2);outline-offset:3px}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.kicker{display:inline-flex;align-items:center;gap:8px;color:var(--roxo2);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:.78rem}
+.kicker::before{content:"";width:26px;height:2px;background:var(--roxo2)}
+h2{font-size:clamp(2rem,4.4vw,3.2rem);line-height:1.05;margin:10px 0 14px;letter-spacing:-.01em}
+h2 em{font-style:normal;color:var(--roxo2)}
+.sub{color:var(--suave);font-size:1.08rem;max-width:680px;margin:0 0 34px}
+section{padding:96px 0;position:relative}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#7a5be0,var(--roxo));
+  color:#fff;font-weight:800;text-decoration:none;border-radius:999px;padding:14px 24px;border:none;cursor:pointer;
+  box-shadow:0 12px 30px rgba(104,68,212,.38);transition:transform .15s, box-shadow .15s;font-size:1rem;font-family:inherit}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(104,68,212,.5)}
+.btn.sec{background:rgba(255,255,255,.06);color:var(--texto);border:1px solid rgba(255,255,255,.22);box-shadow:none}
+.btn.pq{padding:9px 16px;font-size:.92rem}
+.seta{width:14px;height:14px;border:solid currentColor;border-width:0 3px 3px 0;transform:rotate(45deg);margin-top:-6px}
+
+/* revelar ao fazer scroll */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease, transform .8s ease}
+.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+
+/* ---------- topo ---------- */
+header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s, border-color .3s;border-bottom:1px solid transparent}
+header.solido{background:rgba(20,23,34,.86);backdrop-filter:blur(12px);border-bottom-color:rgba(190,170,255,.16)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+header .logo img{height:40px;width:auto}
+nav{display:flex;align-items:center;gap:24px}
+nav a{color:var(--suave);text-decoration:none;font-weight:600;font-size:.95rem;transition:color .15s}
+nav a:hover{color:#fff}
+nav a.btn{color:#fff}
+
+/* ---------- hero ---------- */
+.hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:110px 0 120px;overflow:hidden;
+  background:radial-gradient(1100px 680px at 78% 34%, rgba(104,68,212,.28), transparent 60%),
+             linear-gradient(110deg,var(--ameixa1) 0%,var(--ameixa2) 55%,#2e2856 100%)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero .wrap{position:relative;z-index:3;width:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:800;color:var(--lilas);border:1px solid rgba(190,170,255,.5);
+  background:rgba(104,68,212,.16);padding:6px 14px;border-radius:999px}
+.tag i{width:8px;height:8px;border-radius:50%;background:var(--verde);box-shadow:0 0 0 0 rgba(134,239,172,.7);animation:pulso 2s infinite}
+@keyframes pulso{70%{box-shadow:0 0 0 10px rgba(134,239,172,0)}100%{box-shadow:0 0 0 0 rgba(134,239,172,0)}}
+h1{font-size:clamp(2.8rem,6.6vw,5.4rem);line-height:1;margin:20px 0 18px;font-weight:900;letter-spacing:-.025em}
+h1 .rodar{display:inline-block;color:var(--roxo2);position:relative}
+h1 .rodar span{display:inline-block;animation:entra .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes entra{from{opacity:0;transform:translateY(.4em) rotateX(60deg)}to{opacity:1;transform:none}}
+.lead{font-size:1.18rem;color:rgba(255,255,255,.86);margin:0 0 30px;max-width:560px}
+.lead b{color:var(--lilas)}
+.acoes{display:flex;gap:12px;flex-wrap:wrap}
+.selos{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.selo{font-size:.85rem;color:var(--suave);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:6px 12px}
+.selo b{color:#fff}
+
+/* órbita: o post no centro e as redes à volta */
+.orbita{position:relative;width:min(500px,100%);aspect-ratio:1;justify-self:center}
+.orbita::before,.orbita::after{content:"";position:absolute;inset:9%;border-radius:50%;border:1px dashed rgba(190,170,255,.25)}
+.orbita::after{inset:27%;border-style:solid;border-color:rgba(190,170,255,.12)}
+.centro{position:absolute;left:50%;top:50%;width:40%;transform:translate(-50%,-50%);z-index:3;border-radius:26px;padding:16px;
+  background:linear-gradient(150deg,var(--ameixa2),var(--ameixa1));border:1px solid var(--borda);box-shadow:0 30px 70px rgba(0,0,0,.55),0 0 0 8px rgba(104,68,212,.08)}
+.centro img{width:58%;margin:0 auto 10px}
+.centro .escrita{font-size:.78rem;color:var(--lilas);min-height:3.6em;line-height:1.4}
+.centro .escrita::after{content:"";display:inline-block;width:2px;height:1em;background:var(--roxo2);vertical-align:-2px;margin-left:2px;animation:pisca 1s steps(1) infinite}
+@keyframes pisca{50%{opacity:0}}
+.centro .enviar{margin-top:10px;display:flex;justify-content:space-between;align-items:center;font-size:.7rem;color:var(--suave)}
+.centro .enviar b{background:linear-gradient(135deg,#7a5be0,var(--roxo));color:#fff;border-radius:999px;padding:4px 10px;font-size:.72rem}
+.anel{position:absolute;inset:0}
+@keyframes gira{to{transform:rotate(360deg)}}
+.no{position:absolute;left:50%;top:50%;width:0;height:0}
+.no span{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:7px;white-space:nowrap;
+  background:var(--cartao);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:7px 13px 7px 8px;font-weight:700;font-size:.85rem;
+  box-shadow:0 10px 26px rgba(0,0,0,.45);transition:border-color .3s, box-shadow .3s}
+.no span i{width:20px;height:20px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:.7rem;font-weight:900;color:#fff}
+.no.ok span{border-color:var(--verde);box-shadow:0 0 0 4px rgba(134,239,172,.16),0 10px 26px rgba(0,0,0,.45)}
+.no.ok span::after{content:"✓";color:var(--verde);font-weight:900;margin-left:2px}
+.desce{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:4;color:var(--lilas);font-size:.8rem;text-decoration:none;
+  display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.8}
+.desce span{width:22px;height:34px;border:2px solid rgba(201,185,255,.6);border-radius:12px;position:relative}
+.desce span::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--lilas);animation:rato 1.6s infinite}
+@keyframes rato{0%{opacity:0;transform:translateY(0)}40%{opacity:1}100%{opacity:0;transform:translateY(10px)}}
+
+/* ---------- faixa das redes ---------- */
+.faixa{background:var(--roxo);color:#fff;overflow:hidden;white-space:nowrap;padding:14px 0;transform:rotate(-1.2deg);margin:-14px -10px 0;position:relative;z-index:5;
+  box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.faixa div{display:inline-flex;gap:38px;animation:passa 34s linear infinite;font-weight:900;font-size:1.25rem;letter-spacing:.06em}
+.faixa span::after{content:"✦";margin-left:38px;opacity:.6}
+@keyframes passa{to{transform:translateX(-50%)}}
+
+/* ---------- como funciona: computador / telemóvel ---------- */
+.lados{display:inline-flex;background:var(--cartao);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:6px;margin-bottom:34px;position:relative}
+.lados button{position:relative;z-index:1;background:none;border:none;color:var(--suave);font:inherit;font-weight:800;font-size:1rem;padding:12px 26px;border-radius:999px;cursor:pointer;transition:color .2s}
+.lados button.on{color:#fff}
+.lados .marca{position:absolute;top:6px;bottom:6px;left:6px;border-radius:999px;background:linear-gradient(135deg,#7a5be0,var(--roxo));transition:all .35s cubic-bezier(.3,.9,.3,1)}
+.lado{display:none}
+.lado.on{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;animation:aparece .5s ease}
+@keyframes aparece{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.passos{display:grid;gap:12px;counter-reset:p}
+.passo{display:grid;grid-template-columns:50px 1fr;gap:14px;align-items:start;background:var(--cartao);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:16px 18px;
+  transition:border-color .2s, transform .2s}
+.passo:hover{border-color:rgba(190,170,255,.55);transform:translateX(4px)}
+.passo .n{counter-increment:p;width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,#7a5be0,var(--roxo))}
+.passo .n::before{content:counter(p)}
+.passo h3{margin:2px 0 3px;font-size:1.08rem}
+.passo p{margin:0;color:var(--suave);font-size:.95rem}
+.ecra-pc{border-radius:18px;border:1px solid var(--borda);box-shadow:0 30px 60px rgba(0,0,0,.5);overflow:hidden;background:#fff}
+.ecra-pc .barra{display:flex;gap:6px;padding:9px 12px;background:var(--lateral)}
+.ecra-pc .barra i{width:10px;height:10px;border-radius:50%;background:#41465e}
+.tels{display:flex;gap:18px;justify-content:center}
+.tels img{width:min(230px,44%);border-radius:30px;border:8px solid var(--lateral);box-shadow:0 30px 60px rgba(0,0,0,.55)}
+.tels img:last-child{margin-top:46px}
+
+/* ---------- experimenta ---------- */
+.lab{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:start}
+.compor{background:linear-gradient(180deg,var(--lateral),#1a1d2b);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:22px;box-shadow:0 30px 60px rgba(0,0,0,.45);position:sticky;top:90px}
+.compor label{font-weight:700;font-size:.9rem;color:var(--lilas)}
+.compor textarea{width:100%;min-height:190px;margin:8px 0 12px;resize:vertical;border-radius:14px;border:1px solid rgba(190,170,255,.3);background:var(--fundo);color:var(--texto);
+  font:inherit;font-size:.98rem;line-height:1.5;padding:14px}
+.ferr{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.ferr button{background:rgba(190,170,255,.12);border:1px solid rgba(190,170,255,.4);color:var(--lilas);border-radius:999px;padding:7px 13px;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.ferr button:hover{background:rgba(190,170,255,.22)}
+.escolha{display:flex;gap:8px;flex-wrap:wrap}
+.escolha label{display:flex;align-items:center;gap:6px;cursor:pointer;background:var(--cartao);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:7px 11px;
+  font-size:.86rem;color:var(--texto);font-weight:600;transition:border-color .2s}
+.escolha input{accent-color:var(--roxo)}
+.escolha label:has(input:checked){border-color:var(--roxo2);background:rgba(104,68,212,.14)}
+.nota-lab{font-size:.82rem;color:var(--suave);margin:14px 0 0}
+.previas{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pv{background:#fff;color:#1c1b22;border-radius:16px;padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.35);animation:aparece .4s ease;display:flex;flex-direction:column}
+.pv .cab{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.pv .cab i{width:30px;height:30px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;color:#fff;font-weight:900;font-size:.8rem}
+.pv .cab b{display:block;font-size:.88rem;line-height:1.1}
+.pv .cab small{color:#6b6880;font-size:.72rem}
+.pv .txt{font-size:.86rem;white-space:pre-wrap;word-break:break-word;margin:0 0 10px}
+.pv .txt .h{color:#6844d4;font-weight:600}
+.pv .txt .mais{color:#6b6880;font-weight:600;cursor:pointer;border:none;background:none;font:inherit;padding:0}
+.pv .img{border-radius:10px;background:linear-gradient(150deg,var(--ameixa2),var(--ameixa1));aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;margin-top:auto}
+.pv .img img{width:44%}
+.pv .cont{font-size:.74rem;color:#6b6880;margin-top:8px;font-variant-numeric:tabular-nums}
+.pv .cont.mal{color:#c0262d;font-weight:700}
+.pv .aviso{font-size:.74rem;background:#fde8e8;color:#8a1c22;border-radius:8px;padding:6px 8px;margin-top:6px}
+.vazio{grid-column:1/-1;border:1px dashed var(--borda);border-radius:16px;padding:30px;text-align:center;color:var(--suave)}
+
+/* ---------- por dentro ---------- */
+.galeria{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.fig{margin:0;background:var(--cartao);border:1px solid rgba(255,255,255,.07);border-radius:var(--raio);overflow:hidden;transition:transform .25s, border-color .25s}
+.fig:hover{transform:translateY(-6px);border-color:rgba(190,170,255,.5)}
+.fig img{aspect-ratio:3/2;object-fit:cover;object-position:top left;width:100%;background:#fff}
+.fig figcaption{padding:16px 18px}
+.fig figcaption b{display:block;margin-bottom:3px}
+.fig figcaption span{color:var(--suave);font-size:.93rem}
+.video{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;margin-top:46px;background:linear-gradient(110deg,var(--ameixa1),var(--ameixa2));
+  border:1px solid var(--borda);border-radius:24px;padding:24px}
+.video video{width:100%;border-radius:16px;background:#000;display:block}
+.video h3{font-size:1.6rem;margin:6px 0 8px}
+.video p{color:var(--lilas);margin:0}
+
+/* ---------- redes ---------- */
+.redes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rede{background:var(--cartao);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:20px;transition:border-color .2s, transform .2s}
+.rede:hover{border-color:rgba(190,170,255,.5);transform:translateY(-4px)}
+.rede .cab{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.rede .cab i{width:34px;height:34px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;color:#fff;font-weight:900}
+.rede .cab b{font-size:1.1rem;flex:1}
+.estado{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.estado.ativa{background:rgba(134,239,172,.14);color:#86efac;border:1px solid rgba(134,239,172,.45)}
+.estado.espera{background:rgba(255,190,80,.12);color:#ffcf7a;border:1px solid rgba(255,190,80,.45)}
+.rede p{margin:0;color:var(--suave);font-size:.93rem}
+.rede code{background:rgba(255,255,255,.08);border-radius:5px;padding:1px 5px;font-size:.85em;color:var(--lilas)}
+.consent{margin-top:24px;background:rgba(104,68,212,.1);border:1px solid var(--borda);border-left:4px solid var(--roxo2);border-radius:14px;padding:16px 20px;color:var(--lilas)}
+
+/* ---------- frase grande ---------- */
+.frase{text-align:center;padding:110px 0;background:radial-gradient(600px 300px at 50% 50%,rgba(104,68,212,.2),transparent 70%)}
+.frase .grande{font-size:clamp(3.2rem,10vw,8.5rem);font-weight:900;line-height:.9;letter-spacing:-.03em;
+  background:linear-gradient(90deg,#fff,var(--roxo2),var(--roxo),#fff);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:brilho 8s ease-in-out infinite}
+@keyframes brilho{0%,100%{background-position:0 0}50%{background-position:100% 0}}
+.frase p{font-size:1.2rem;color:var(--lilas);margin:14px auto 0;max-width:640px}
+.frase p i{color:#fff;font-style:normal;font-weight:800}
+
+/* ---------- dados ---------- */
+.dados{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.dado{background:var(--cartao);border:1px solid rgba(255,255,255,.07);border-radius:var(--raio);padding:24px}
+.dado .v{display:block;font-size:2rem;font-weight:900;color:var(--roxo2);line-height:1.1}
+.dado h3{margin:10px 0 6px}
+.dado p{margin:0;color:var(--suave)}
+
+/* ---------- licença ---------- */
+.licenca{display:grid;grid-template-columns:.9fr 1.1fr;gap:30px;align-items:center}
+.plano{position:relative;border:2px solid var(--roxo);background:linear-gradient(180deg,rgba(104,68,212,.18),rgba(104,68,212,.03) 45%),var(--cartao);
+  box-shadow:0 24px 60px rgba(104,68,212,.18);border-radius:22px;padding:30px 26px}
+.plano .fita{position:absolute;top:-13px;right:20px;background:var(--roxo);color:#fff;font-weight:900;font-size:.72rem;padding:4px 12px;border-radius:999px;letter-spacing:.06em;text-transform:uppercase}
+.plano .para{color:var(--roxo2);font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:.1em}
+.plano h3{margin:6px 0 0;font-size:1.5rem}
+.preco{font-size:3.2rem;font-weight:900;line-height:1.1;margin:10px 0 2px}
+.preco small{font-size:1rem;color:var(--suave);font-weight:600}
+.plano .nota{color:var(--suave);font-size:.92rem;margin:0 0 16px}
+.plano .nota s{color:var(--suave)}
+.plano ul{list-style:none;padding:0;margin:0 0 24px;display:grid;gap:9px}
+.plano li{position:relative;padding-left:28px;color:#e8eaf6}
+.plano li::before{content:"";position:absolute;left:0;top:4px;width:18px;height:18px;border-radius:50%;background:rgba(104,68,212,.22);box-shadow:inset 0 0 0 1.5px var(--roxo2)}
+.plano li::after{content:"";position:absolute;left:6.5px;top:7px;width:5px;height:9px;border:solid var(--roxo2);border-width:0 2px 2px 0;transform:rotate(40deg)}
+.plano .btn{width:100%}
+.para-quem{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.para-quem span{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:8px 14px;font-weight:600;font-size:.93rem}
+
+/* ---------- perguntas ---------- */
+details{background:var(--cartao);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:4px 20px;margin-bottom:10px;transition:border-color .2s}
+details[open]{border-color:rgba(190,170,255,.5)}
+summary{cursor:pointer;font-weight:700;padding:16px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--roxo2);font-size:1.5rem;line-height:1;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:0 0 18px;color:var(--suave)}
+
+/* ---------- chamada final ---------- */
+.final{text-align:center;overflow:hidden;background:linear-gradient(110deg,var(--ameixa1),var(--ameixa2))}
+.final .simbolo{width:220px;margin:0 auto 22px;animation:flutua 6s ease-in-out infinite;filter:drop-shadow(0 26px 40px rgba(0,0,0,.5))}
+@keyframes flutua{0%,100%{translate:0 0}50%{translate:0 -14px}}
+.final h2{font-size:clamp(2.4rem,5vw,3.6rem)}
+.final p{color:var(--lilas);margin:0 0 28px;font-size:1.1rem}
+footer{padding:28px 0;color:var(--suave);font-size:.88rem;border-top:1px solid rgba(255,255,255,.06)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+footer img{height:34px;width:auto}
+
+@media (max-width:980px){
+  .hero .wrap,.lado.on,.lab,.galeria,.redes,.dados,.licenca,.video{grid-template-columns:minmax(0,1fr)}
+  .compor{position:static}
+  .orbita{width:min(440px,96%)}
+}
+@media (max-width:640px){
+  nav a:not(.btn){display:none}
+  section{padding:70px 0}
+  .hero{padding:96px 0 120px}
+  .lados button{padding:10px 16px;font-size:.92rem}
+  .faixa div{font-size:1.05rem}
+  .previas{grid-template-columns:1fr}
+  .no span{font-size:.74rem;padding:5px 10px 5px 6px}
+  .no span i{width:16px;height:16px;font-size:.6rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
 </head>
 <body>
-<nav aria-label="Navegação principal">
-  <a href="index.html" aria-current="page">S-post</a>
-  <a href="https://www.aauts.pt/deskai/spost/s-post.php">Descarregar</a>
-  <a href="termos.html">Termos de utilização</a>
-  <a href="privacidade.html">Política de privacidade</a>
-  <a href="mailto:aauts.dir@gmail.com">Contacto AAUTS</a>
-</nav>
-<main>
-  <header style="position:relative">
-    <img src="media/logo-spost-branco.webp" alt="S-pOST" width="240" height="180"
-      style="position:absolute;top:18px;right:22px;width:clamp(56px,10vw,80px);height:auto">
-    <p style="padding-right:76px">S-POST | AAUTS, By Lemba</p>
-    <h1>O teu estúdio de conteúdo</h1>
-    <p>Escreve, adapta e organiza publicações num único espaço, com controlo sobre o que guardas e envias.</p>
-    <p><a href="https://www.aauts.pt/deskai/spost/s-post.php" style="color:#fff;font-weight:700">Descarregar o S-post para Windows →</a></p>
-  </header>
-  <section>
-    <h2>O que é o S-post?</h2>
-    <p>O S-post é uma aplicação da AAUTS para preparar e publicar conteúdos em redes sociais, no WordPress e no AVAI.
-      É um programa para Windows 10 e 11, vendido com licença anual, e tem uma app Android complementar
-      (em fase final de testes, incluída na licença).</p>
-    <p class="notice">Esta página apresenta a aplicação; não é uma instância pública do editor. As integrações com cada
-      rede dependem das permissões e da aprovação dessa plataforma: YouTube em verificação pela Google, Instagram e
-      TikTok à espera de aprovação.</p>
-    <h2>Ferramentas de criação</h2>
-    <ul>
-      <li>Texto base e versões por rede, anexos e pré-visualização de todas as redes escolhidas, lado a lado.</li>
-      <li>Designs do Canva importados diretamente para os anexos (imagem ou vídeo).</li>
-      <li>Lista de passos que mostra o que falta para publicar, e indicação das contas já ligadas em cada rede.</li>
-      <li>Rascunhos e cópias locais de recuperação de trabalho pendente.</li>
-      <li>Biblioteca de modelos, campanhas, hashtags e perfil da marca, com o logótipo da marca nas pré-visualizações.</li>
-      <li>Calendário e planeamento local, com envio manual ou automático à hora marcada (tarefa do Windows, ativada pelo utilizador).</li>
-      <li>Exportação de texto e pacotes com anexos, sem credenciais.</li>
-      <li>Sugestões de IA opcionais, com fornecedor local ou API escolhida pelo utilizador.</li>
-      <li>App Android: escreve e agenda no telemóvel para o computador publicar, ou publica diretamente no
-        WordPress e no AVAI; mostra o planeamento do computador num calendário.</li>
-    </ul>
-  </section>
-  <section>
-    <h2>Como se utiliza</h2>
-    <ol>
-      <li>Abre a aplicação local e prepara o conteúdo.</li>
-      <li>Escolhe os destinos, adapta o texto e revê os avisos.</li>
-      <li>Guarda, exporta ou organiza o conteúdo no calendário.</li>
-      <li>Liga as contas (login no site oficial de cada rede) e confirma a publicação, ou agenda-a como automática.</li>
-      <li>Opcional: emparelha o telemóvel com um código QR para criares e acompanhares as publicações onde estiveres.</li>
-    </ol>
-    <p>A aplicação nunca publica apenas por gerar uma sugestão ou ligar uma conta: cada publicação é confirmada por ti ou agendada por ti como automática.</p>
-  </section>
-  <section>
-    <h2>Integrações disponíveis</h2>
-    <ul>
-      <li><strong>WordPress:</strong> artigos com imagens e anexos, com uma Palavra-passe de aplicação do teu site.</li>
-      <li><strong>Facebook:</strong> texto, imagens ou um vídeo em Páginas que administras (não em perfis pessoais).</li>
-      <li><strong>Instagram:</strong> uma imagem, um carrossel ou um vídeo (Reel) em contas profissionais.</li>
-      <li><strong>LinkedIn:</strong> texto, imagens ou um vídeo no teu perfil pessoal; Páginas de empresa (pedido de aprovação ao LinkedIn em curso).</li>
-      <li><strong>YouTube:</strong> um vídeo por publicação, com título, descrição, categoria, miniatura e visibilidade escolhida (público, não listado ou privado). Pede apenas <code>youtube.upload</code> e <code>youtube.readonly</code> (para identificar o canal).</li>
-      <li><strong>TikTok</strong> (à espera de aprovação)<strong>:</strong> um vídeo por publicação com <code>video.publish</code>, com a visibilidade escolhida por ti; identifica a conta com <code>user.info.basic</code>. Não lista vídeos nem consulta estatísticas.</li>
-      <li><strong>Canva:</strong> importa os teus designs (imagem ou vídeo) diretamente para os anexos do post, com o login oficial do Canva e só permissões de leitura.</li>
-      <li><strong>AVAI:</strong> texto, até 5 imagens ou um vídeo na rede AVAI, com um token de 30 dias criado pelo utilizador no AVAI.</li>
-      <li><strong>Bluesky:</strong> texto até 300 caracteres, com links e #hashtags clicáveis, e até 4 imagens, com uma Palavra-passe de aplicação criada pelo utilizador no Bluesky (nunca a senha da conta).</li>
-    </ul>
-    <p>O consentimento ocorre sempre no site oficial de cada plataforma: fazes o login e escolhes a conta lá. Depois, uma página de retorno em aauts.pt entrega a autorização ao S-post no teu computador. Nunca introduzas a tua palavra-passe de uma rede social no S-post.</p>
-  </section>
-  <section>
-    <h2>Dados e controlo</h2>
-    <p>O trabalho é guardado no computador onde a aplicação é executada (e, com a app Android, no telemóvel). Gerar com uma API externa ou confirmar uma publicação transmite os dados necessários ao fornecedor escolhido. Entre o telemóvel e o computador, as publicações viajam cifradas (AES-256) pelo servidor aauts.pt, que não as consegue ler e as apaga ao fim de 14 dias no máximo. Consulta a <a href="privacidade.html">política de privacidade</a> para conhecer os dados, armazenamento e opções de eliminação.</p>
-    <h2>Contacto</h2>
-    <p>Responsável indicado pela aplicação: <strong>AAUTS</strong>.<br>Suporte e privacidade: <a href="mailto:aauts.dir@gmail.com">aauts.dir@gmail.com</a>.</p>
-  </section>
-</main>
-<footer>S-POST | AAUTS, By Lemba · <a href="termos.html">Termos de utilização</a> · <a href="privacidade.html">Política de privacidade</a></footer>
+
+<header id="topo">
+  <div class="wrap">
+    <a class="logo" href="#"><img src="media/logo-spost-branco.webp" alt="S-post" width="240" height="180"></a>
+    <nav aria-label="Navegação principal">
+      <a href="#como">Como funciona</a>
+      <a href="#experimenta">Experimenta</a>
+      <a href="#redes">Redes</a>
+      <a href="#licenca">Licença</a>
+      <a href="#perguntas">Perguntas</a>
+      <a class="btn pq" href="https://www.aauts.pt/deskai/spost/s-post.php">Descarregar</a>
+    </nav>
+  </div>
+</header>
+
+<!-- TOPO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="tag"><i></i> O teu estúdio de conteúdo · Windows e Android</span>
+      <h1>Escreve uma vez.<br>Publica no <span class="rodar" id="rodar"><span>Facebook.</span></span></h1>
+      <p class="lead">O <b>S-post</b> é a aplicação da AAUTS para preparar e publicar conteúdos: escreves a ideia uma vez, adaptas a
+        cada rede e publicas — ou agendas — <b>sempre com a tua confirmação</b>.</p>
+      <div class="acoes">
+        <a class="btn" href="https://www.aauts.pt/deskai/spost/s-post.php">Descarregar para Windows</a>
+        <a class="btn sec" href="#experimenta">Experimentar aqui</a>
+      </div>
+      <div class="selos">
+        <span class="selo"><b>9</b> redes e o teu site</span>
+        <span class="selo">Nada sai <b>sem confirmação</b></span>
+        <span class="selo">App <b>Android</b> incluída</span>
+      </div>
+    </div>
+    <div class="orbita" id="orbita" aria-hidden="true">
+      <div class="anel" id="anel"></div>
+      <div class="centro">
+        <img src="media/logo-spost-branco.webp" alt="" width="240" height="180">
+        <div class="escrita" id="escrita"></div>
+        <div class="enviar"><span id="destinos">8 redes</span><b>Publicar</b></div>
+      </div>
+    </div>
+  </div>
+  <a class="desce" href="#como"><span></span>descobre</a>
+</section>
+
+<div class="faixa" aria-hidden="true"><div id="faixa">
+  <span>FACEBOOK</span><span>INSTAGRAM</span><span>LINKEDIN</span><span>YOUTUBE</span><span>TIKTOK</span><span>BLUESKY</span><span>WORDPRESS</span><span>AVAI</span><span>CANVA</span>
+</div></div>
+
+<!-- COMO FUNCIONA -->
+<section id="como">
+  <div class="wrap">
+    <span class="kicker rv">Como funciona</span>
+    <h2 class="rv d1">No computador <em>e no bolso</em>.</h2>
+    <p class="sub rv d2">O S-post é um programa para Windows 10 e 11, com uma app Android complementar (em fase final de testes, incluída na licença).</p>
+    <div class="lados rv d2" role="tablist">
+      <span class="marca" id="marca"></span>
+      <button class="on" data-lado="pc" role="tab" aria-selected="true">No computador</button>
+      <button data-lado="tel" role="tab" aria-selected="false">No telemóvel</button>
+    </div>
+
+    <div class="lado on" id="lado-pc">
+      <div class="passos">
+        <div class="passo"><span class="n"></span><div><h3>Escreve e escolhe as redes</h3><p>Texto base, anexos e versões por rede, com a pré-visualização de todas lado a lado.</p></div></div>
+        <div class="passo"><span class="n"></span><div><h3>Adapta e revê os avisos</h3><p>Uma lista de passos mostra o que falta para publicar; a IA opcional corrige, encurta ou muda o tom.</p></div></div>
+        <div class="passo"><span class="n"></span><div><h3>Guarda ou planeia</h3><p>Rascunhos, modelos, campanhas e calendário, com envio manual ou automático à hora marcada.</p></div></div>
+        <div class="passo"><span class="n"></span><div><h3>Liga as contas e publica</h3><p>Login no site oficial de cada rede; depois confirmas a publicação, ou agendas-a como automática.</p></div></div>
+      </div>
+      <div class="ecra-pc rv"><div class="barra"><i></i><i></i><i></i></div>
+        <img src="media/editor.webp" alt="Editor do S-post: escrever uma vez e ver todas as redes lado a lado" width="1440" height="960" loading="lazy"></div>
+    </div>
+
+    <div class="lado" id="lado-tel">
+      <div class="passos">
+        <div class="passo"><span class="n"></span><div><h3>Emparelha com um código QR</h3><p>Em «Contas e ajustes → Telemóvel», lês o código com a app Android.</p></div></div>
+        <div class="passo"><span class="n"></span><div><h3>Escreve onde estiveres</h3><p>Texto, fotos ou vídeo, e as redes onde queres publicar.</p></div></div>
+        <div class="passo"><span class="n"></span><div><h3>Agenda para o computador publicar</h3><p>Modo «Com o meu PC»: o computador publica por ti, à hora que escolheste.</p></div></div>
+        <div class="passo"><span class="n"></span><div><h3>Ou publica já do telemóvel</h3><p>Modo «Só no telemóvel»: publicas na hora no WordPress e no AVAI.</p></div></div>
+      </div>
+      <div class="tels">
+        <img src="media/android-inicio.webp" alt="App Android do S-post: ecrã inicial" width="260" height="562" loading="lazy">
+        <img src="media/android-compor.webp" alt="App Android do S-post: nova publicação com as redes" width="260" height="562" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIMENTA -->
+<section id="experimenta" style="background:var(--fundo2)">
+  <div class="wrap">
+    <span class="kicker rv">Experimenta</span>
+    <h2 class="rv d1">Uma ideia, <em>cada rede à sua maneira</em>.</h2>
+    <p class="sub rv d2">Escreve aqui e vê como fica em cada rede: o «ver mais», os limites de caracteres e as hashtags. Isto é só uma demonstração
+      nesta página — nada é enviado. No S-post é a sério.</p>
+    <div class="lab">
+      <div class="compor rv">
+        <label for="texto">Texto da publicação</label>
+        <textarea id="texto" maxlength="4000">Este sábado há Festival de Arte Urbana no bairro! 🎨 Oficinas de graffiti, música ao vivo e uma parede aberta a quem quiser pintar. Traz a família e os amigos — a entrada é livre e começa às 15h. Vemo-nos lá?</textarea>
+        <div class="ferr">
+          <button type="button" id="b-hash">＃ Juntar hashtags</button>
+          <button type="button" id="b-link">🔗 Juntar link</button>
+          <button type="button" id="b-repor">↺ Repor</button>
+        </div>
+        <label>Onde queres partilhar?</label>
+        <div class="escolha" id="escolha"></div>
+        <p class="nota-lab">Os limites e os cortes do «ver mais» são aproximados, para a demonstração.</p>
+      </div>
+      <div class="previas" id="previas" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- POR DENTRO -->
+<section id="dentro">
+  <div class="wrap">
+    <span class="kicker rv">Por dentro</span>
+    <h2 class="rv d1">Tudo <em>num só espaço</em>.</h2>
+    <p class="sub rv d2">Sem andar de aplicação em aplicação. O trabalho fica guardado no teu computador.</p>
+    <div class="galeria">
+      <figure class="fig rv"><img src="media/anexos-canva.webp" alt="Anexos do Canva no S-post" width="1440" height="960" loading="lazy">
+        <figcaption><b>Os teus designs do Canva</b><span>Importa imagens e vídeos do Canva diretamente para o post, sem descarregar ficheiros.</span></figcaption></figure>
+      <figure class="fig rv d1"><img src="media/ia.webp" alt="Assistente de IA do S-post" width="1440" height="960" loading="lazy">
+        <figcaption><b>Assistente de IA e passos claros</b><span>Corrigir, encurtar ou mudar o tom, e uma lista que mostra o que falta para publicar.</span></figcaption></figure>
+      <figure class="fig rv d2"><img src="media/ver-ligacoes.webp" alt="Página Ver ligações do S-post" width="1440" height="960" loading="lazy">
+        <figcaption><b>Liga as tuas redes em minutos</b><span>Com o login oficial de cada rede; um ponto verde mostra as contas ligadas.</span></figcaption></figure>
+      <figure class="fig rv"><img src="media/planeamento.webp" alt="Calendário de planeamento do S-post" width="1440" height="960" loading="lazy">
+        <figcaption><b>Planeia e publica à hora certa</b><span>Calendário com publicação automática (tarefa do Windows, ativada por ti).</span></figcaption></figure>
+      <figure class="fig rv d1"><img src="media/biblioteca.webp" alt="Biblioteca de conteúdos do S-post" width="1440" height="960" loading="lazy">
+        <figcaption><b>Modelos e perfil da marca</b><span>O tom de voz e o logótipo da tua marca em todas as publicações.</span></figcaption></figure>
+      <figure class="fig rv d2"><img src="media/rascunhos.webp" alt="Rascunhos do S-post" width="1440" height="960" loading="lazy">
+        <figcaption><b>Rascunhos que não se perdem</b><span>Rascunhos e cópias locais de recuperação do trabalho pendente.</span></figcaption></figure>
+    </div>
+    <div class="video rv">
+      <video controls preload="none" poster="media/S-post-apresentacao.jpg" playsinline aria-label="Apresentação do S-post">
+        <source src="media/S-post-apresentacao.mp4" type="video/mp4">
+      </video>
+      <div>
+        <span class="kicker">Vídeo</span>
+        <h3>O S-post em 40 segundos</h3>
+        <p>Narração em português, legendas em inglês.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REDES -->
+<section id="redes" style="background:var(--fundo2)">
+  <div class="wrap">
+    <span class="kicker rv">Integrações</span>
+    <h2 class="rv d1">As tuas redes, <em>o teu site</em>.</h2>
+    <p class="sub rv d2">Cada rede aprova as apps que publicam por ti. As ligações à espera ficam ativas logo que a aprovação chegue, sem custo extra.</p>
+    <div class="redes">
+      <div class="rede rv"><div class="cab"><i style="background:#1877f2">f</i><b>Facebook</b><span class="estado ativa">Ativa</span></div>
+        <p>Texto, imagens ou um vídeo em Páginas que administras (não em perfis pessoais).</p></div>
+      <div class="rede rv d1"><div class="cab"><i style="background:linear-gradient(135deg,#f9a33a,#e1306c,#833ab4)">ig</i><b>Instagram</b><span class="estado espera">À espera</span></div>
+        <p>Uma imagem, um carrossel ou um vídeo (Reel) em contas profissionais.</p></div>
+      <div class="rede rv d2"><div class="cab"><i style="background:#0a66c2">in</i><b>LinkedIn</b><span class="estado ativa">Ativa</span></div>
+        <p>Texto, imagens ou um vídeo no teu perfil pessoal; Páginas de empresa (pedido de aprovação ao LinkedIn em curso).</p></div>
+      <div class="rede rv"><div class="cab"><i style="background:#ff0033">▶</i><b>YouTube</b><span class="estado espera">Em verificação</span></div>
+        <p>Um vídeo por publicação, com título, descrição, categoria, miniatura e visibilidade escolhida. Pede apenas <code>youtube.upload</code> e <code>youtube.readonly</code> (para identificar o canal).</p></div>
+      <div class="rede rv d1"><div class="cab"><i style="background:#111;box-shadow:inset 0 0 0 1px #444">♪</i><b>TikTok</b><span class="estado espera">À espera</span></div>
+        <p>Um vídeo por publicação com <code>video.publish</code>, com a visibilidade escolhida por ti; identifica a conta com <code>user.info.basic</code>. Não lista vídeos nem consulta estatísticas.</p></div>
+      <div class="rede rv d2"><div class="cab"><i style="background:#0085ff">🦋</i><b>Bluesky</b><span class="estado ativa">Ativa</span></div>
+        <p>Texto até 300 caracteres, com links e #hashtags clicáveis, e até 4 imagens, com uma Palavra-passe de aplicação (nunca a senha da conta).</p></div>
+      <div class="rede rv"><div class="cab"><i style="background:#21759b">W</i><b>WordPress</b><span class="estado ativa">Ativa</span></div>
+        <p>Artigos com imagens e anexos, com uma Palavra-passe de aplicação do teu site.</p></div>
+      <div class="rede rv d1"><div class="cab"><i style="background:#6b3fd4">A</i><b>AVAI</b><span class="estado ativa">Ativa</span></div>
+        <p>Texto, até 5 imagens ou um vídeo na rede AVAI, com um token de 30 dias criado por ti no AVAI.</p></div>
+      <div class="rede rv d2"><div class="cab"><i style="background:linear-gradient(135deg,#00c4cc,#7d2ae8)">C</i><b>Canva</b><span class="estado ativa">Ativa</span></div>
+        <p>Importa os teus designs (imagem ou vídeo) diretamente para os anexos, com o login oficial do Canva e só permissões de leitura.</p></div>
+    </div>
+    <p class="consent rv">O consentimento ocorre sempre no site oficial de cada plataforma: fazes o login e escolhes a conta lá. Depois, uma página de
+      retorno em aauts.pt entrega a autorização ao S-post no teu computador. <b>Nunca introduzas a tua palavra-passe de uma rede social no S-post.</b></p>
+  </div>
+</section>
+
+<!-- FRASE -->
+<section class="frase">
+  <div class="wrap">
+    <div class="grande rv">BOM POST.</div>
+    <p class="rv d1">Boas ideias merecem <i>um bom post</i>. O S-post trata do tamanho, das hashtags e do «ver mais» de cada rede — tu tratas da ideia.</p>
+  </div>
+</section>
+
+<!-- DADOS -->
+<section id="dados">
+  <div class="wrap">
+    <span class="kicker rv">Dados e controlo</span>
+    <h2 class="rv d1">O teu trabalho <em>é teu</em>.</h2>
+    <p class="sub rv d2">Consulta a <a href="privacidade.html">política de privacidade</a> para conhecer os dados, o armazenamento e as opções de eliminação.</p>
+    <div class="dados">
+      <div class="dado rv"><span class="v">No teu PC</span><h3>Guardado localmente</h3><p>O trabalho fica no computador onde a aplicação corre (e, com a app Android, no telemóvel). As ligações ficam no Gestor de Credenciais do Windows.</p></div>
+      <div class="dado rv d1"><span class="v">AES-256</span><h3>Telemóvel ↔ computador</h3><p>As publicações viajam cifradas pelo servidor aauts.pt, que não as consegue ler e as apaga ao fim de 14 dias no máximo.</p></div>
+      <div class="dado rv d2"><span class="v">Tu decides</span><h3>Nada sai sozinho</h3><p>A aplicação nunca publica só por gerar uma sugestão ou ligar uma conta: cada publicação é confirmada por ti ou agendada por ti.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LICENÇA -->
+<section id="licenca" style="background:var(--fundo2)">
+  <div class="wrap licenca">
+    <div>
+      <span class="kicker rv">Licença</span>
+      <h2 class="rv d1">Para quem <em>publica muitas vezes</em>.</h2>
+      <p class="sub rv d2">Escreves a ideia uma vez e o S-post ajuda-te a adaptá-la a cada rede. Guardas rascunhos, modelos e o tom de voz da tua marca, e planeias a semana no calendário.</p>
+      <div class="para-quem rv d2">
+        <span>Artistas e músicos</span><span>Produtores de conteúdo</span><span>Gestores de redes sociais</span><span>Gestores de tráfego</span>
+        <span>Associações e coletivos</span><span>Pequenos negócios</span><span>Agências e freelancers</span><span>Organizadores de eventos</span>
+        <span>Associações de imigrantes e mediadores culturais</span>
+      </div>
+    </div>
+    <div class="plano rv d1">
+      <span class="fita">Preço de lançamento</span>
+      <span class="para">Windows 10 e 11</span><h3>Licença S-post</h3>
+      <div class="preco">29 € <small>no 1.º ano</small></div>
+      <p class="nota">Depois, 39 € por ano. Renovável com o mesmo código.</p>
+      <ul>
+        <li>Até <b>3 computadores</b> Windows</li>
+        <li>App Android incluída, até 5 telemóveis</li>
+        <li>Atualizações e suporte incluídos</li>
+        <li>Pagamento com PayPal, cartão ou MB WAY</li>
+      </ul>
+      <a class="btn" href="https://www.aauts.pt/deskai/spost/s-post.php#comprar">Comprar uma licença</a>
+    </div>
+  </div>
+</section>
+
+<!-- PERGUNTAS -->
+<section id="perguntas">
+  <div class="wrap" style="max-width:880px">
+    <span class="kicker rv">Perguntas</span>
+    <h2 class="rv d1">Perguntas frequentes</h2>
+    <details><summary>O que é o S-post?</summary><p>Uma aplicação da AAUTS para preparar e publicar conteúdos em redes sociais, no WordPress e no AVAI. Esta página apresenta a aplicação; não é uma instância pública do editor.</p></details>
+    <details><summary>Preciso de internet?</summary><p>Para ativar e publicar, sim. Para escrever e organizar, não: funciona até 30 dias sem internet.</p></details>
+    <details><summary>Funciona no telemóvel?</summary><p>Sim, com a app S-post para Android, incluída na licença (até 5 telemóveis). Escolhes o modo «Com o meu PC» — escreves e agendas no telemóvel e o computador publica — ou «Só no telemóvel» — publicas na hora no WordPress e no AVAI. A app está na fase final de testes.</p></details>
+    <details><summary>Os meus dados passam pelo vosso servidor?</summary><p>Só para ligar o telemóvel ao computador, e sempre cifrados (AES-256) com uma chave que fica nos teus aparelhos: o servidor da AAUTS guarda envelopes fechados que não consegue abrir, durante 14 dias no máximo. As senhas e acessos às redes nunca saem do teu computador ou telemóvel.</p></details>
+    <details><summary>Posso usar inteligência artificial?</summary><p>Sim, é opcional: Ollama ou LM Studio (gratuitos, no computador) ou uma chave tua do Gemini, ChatGPT, Claude ou DeepSeek.</p></details>
+    <details><summary>E se o Windows mostrar um aviso ao instalar?</summary><p>Pode acontecer com programas novos: o Windows SmartScreen pode pedir confirmação. Carrega em «Mais informações» e depois em «Executar mesmo assim». Descarrega o S-post só a partir da página oficial em aauts.pt.</p></details>
+    <details><summary>Quanto tempo dura a licença?</summary><p>Um ano, renovável com o mesmo código. O S-post avisa 14 dias antes; depois do fim há 7 dias de tolerância. Os teus rascunhos e ligações nunca são apagados.</p></details>
+    <details><summary>Recebo atualizações?</summary><p>Sim. Com a licença ativa, o S-post avisa das versões novas e instala-as com um clique.</p></details>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final">
+  <div class="wrap">
+    <img class="simbolo rv" src="media/logo-spost-branco.webp" alt="" width="240" height="180">
+    <h2 class="rv d1">Pronto para <em>publicar</em>?</h2>
+    <p class="rv d2">Descarrega o S-post para Windows e liga as tuas redes em minutos.</p>
+    <div class="acoes rv d3" style="justify-content:center">
+      <a class="btn" href="https://www.aauts.pt/deskai/spost/s-post.php">Descarregar o S-post</a>
+      <a class="btn sec" href="#licenca">Ver a licença</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img src="media/logo-spost-branco.webp" alt="S-post" width="240" height="180">
+    <span><a href="termos.html">Termos de utilização</a> · <a href="privacidade.html">Política de privacidade</a> ·
+      <a href="mailto:aauts.dir@gmail.com">aauts.dir@gmail.com</a> · S-POST | AAUTS, By Lemba</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduzir = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // topo opaco depois de descer
+  var topo = document.getElementById('topo');
+  function cab() { topo.classList.toggle('solido', scrollY > 40); }
+  addEventListener('scroll', cab, { passive: true }); cab();
+
+  var REDES = [
+    { id: 'facebook', nome: 'Facebook', ini: 'f', cor: '#1877f2', max: 63206, corte: 240 },
+    { id: 'instagram', nome: 'Instagram', ini: 'ig', cor: 'linear-gradient(135deg,#f9a33a,#e1306c,#833ab4)', max: 2200, corte: 125 },
+    { id: 'linkedin', nome: 'LinkedIn', ini: 'in', cor: '#0a66c2', max: 3000, corte: 210 },
+    { id: 'bluesky', nome: 'Bluesky', ini: '🦋', cor: '#0085ff', max: 300, corte: 0 },
+    { id: 'tiktok', nome: 'TikTok', ini: '♪', cor: '#111', max: 2200, corte: 90 },
+    { id: 'youtube', nome: 'YouTube', ini: '▶', cor: '#ff0033', max: 5000, corte: 160 },
+    { id: 'wordpress', nome: 'WordPress', ini: 'W', cor: '#21759b', max: 0, corte: 0 },
+    { id: 'avai', nome: 'AVAI', ini: 'A', cor: '#6b3fd4', max: 0, corte: 0 }
+  ];
+
+  // palavra a mudar no título
+  var k = 0, rod = document.getElementById('rodar');
+  if (!reduzir) setInterval(function () { k = (k + 1) % REDES.length; rod.innerHTML = '<span>' + REDES[k].nome + '.</span>'; }, 2200);
+
+  // órbita: as redes à volta do post, e uma a uma ficam «publicadas»
+  var anel = document.getElementById('anel'), nos = [];
+  REDES.forEach(function (r) {
+    var no = document.createElement('div'); no.className = 'no';
+    no.innerHTML = '<span><i style="background:' + r.cor + '">' + r.ini + '</i>' + r.nome + '</span>';
+    anel.appendChild(no); nos.push(no);
+  });
+  // as etiquetas andam à volta do post, sempre direitas (uma volta em 60 s)
+  function posiciona(t) {
+    var volta = reduzir ? 0 : (t / 60000) * Math.PI * 2;
+    nos.forEach(function (no, i) {
+      var a = (i / nos.length) * Math.PI * 2 - Math.PI / 2 + volta;
+      no.style.left = (50 + Math.cos(a) * 43) + '%'; no.style.top = (50 + Math.sin(a) * 43) + '%';
+    });
+    if (!reduzir) requestAnimationFrame(posiciona);
+  }
+  posiciona(0);
+  var frases = ['Este sábado há Festival de Arte Urbana no bairro!', 'Novo vídeo no canal: os bastidores do concerto.', 'Inscrições abertas para a oficina de escrita.'];
+  var esc = document.getElementById('escrita'), f = 0, c = 0, publicadas = 0;
+  function escreve() {
+    var frase = frases[f];
+    if (c <= frase.length) { esc.textContent = frase.slice(0, c++); setTimeout(escreve, 45); return; }
+    publicadas = 0; publica();
+  }
+  function publica() {
+    if (publicadas < nos.length) { nos[publicadas++].classList.add('ok'); setTimeout(publica, 260); return; }
+    setTimeout(function () { nos.forEach(function (n) { n.classList.remove('ok'); }); f = (f + 1) % frases.length; c = 0; escreve(); }, 2200);
+  }
+  if (reduzir) { esc.textContent = frases[0]; nos.forEach(function (n) { n.classList.add('ok'); }); } else setTimeout(escreve, 700);
+
+  // faixa das redes: duplica para o movimento ser contínuo
+  var fx = document.getElementById('faixa'); fx.innerHTML += fx.innerHTML;
+
+  // revelar ao fazer scroll
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.rv').forEach(function (el) { io.observe(el); });
+
+  // computador / telemóvel
+  var botoes = document.querySelectorAll('.lados button'), marca = document.getElementById('marca');
+  function lado(nome) {
+    botoes.forEach(function (b) {
+      var on = b.dataset.lado === nome; b.classList.toggle('on', on); b.setAttribute('aria-selected', on);
+      if (on) { marca.style.left = b.offsetLeft + 'px'; marca.style.width = b.offsetWidth + 'px'; }
+    });
+    document.getElementById('lado-pc').classList.toggle('on', nome === 'pc');
+    document.getElementById('lado-tel').classList.toggle('on', nome === 'tel');
+  }
+  botoes.forEach(function (b) { b.addEventListener('click', function () { lado(b.dataset.lado); }); });
+  addEventListener('load', function () { lado('pc'); });
+  addEventListener('resize', function () { var on = document.querySelector('.lados button.on'); if (on) lado(on.dataset.lado); });
+
+  // experimenta: pré-visualizações por rede
+  var texto = document.getElementById('texto'), ORIGINAL = texto.value;
+  var escolha = document.getElementById('escolha'), previas = document.getElementById('previas');
+  var abertas = {}, marcadas = { facebook: 1, instagram: 1, linkedin: 1, bluesky: 1 };
+  REDES.forEach(function (r) {
+    var l = document.createElement('label');
+    l.innerHTML = '<input type="checkbox" value="' + r.id + '"' + (marcadas[r.id] ? ' checked' : '') + '> ' + r.nome;
+    escolha.appendChild(l);
+  });
+  function esc_(s) { return s.replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); }
+  function realca(s) { return esc_(s).replace(/(^|\s)(#[\wÀ-ÿ]+|https?:\/\/\S+)/g, '$1<span class="h">$2</span>'); }
+  function n(s) { return Array.from(s).length; }
+  function desenhaPrevias() {
+    var t = texto.value.trim(), lista = REDES.filter(function (r) { return escolha.querySelector('input[value="' + r.id + '"]').checked; });
+    if (!lista.length) { previas.innerHTML = '<div class="vazio">Escolhe pelo menos uma rede.</div>'; return; }
+    previas.innerHTML = lista.map(function (r) {
+      var total = n(t), corpo, mal = r.max && total > r.max;
+      if (r.corte && total > r.corte && !abertas[r.id]) {
+        corpo = realca(Array.from(t).slice(0, r.corte).join('').replace(/\s+\S*$/, '')) + '… <button class="mais" data-abre="' + r.id + '">ver mais</button>';
+      } else corpo = realca(t) || '<span style="color:#999">(sem texto)</span>';
+      return '<article class="pv"><div class="cab"><i style="background:' + r.cor + '">' + r.ini + '</i><div><b>' + r.nome + '</b><small>A tua conta · agora</small></div></div>' +
+        '<p class="txt">' + corpo + '</p><div class="img"><img src="media/logo-spost-branco.webp" alt=""></div>' +
+        '<div class="cont' + (mal ? ' mal' : '') + '">' + total.toLocaleString('pt-PT') + (r.max ? ' / ' + r.max.toLocaleString('pt-PT') : '') + ' caracteres</div>' +
+        (mal ? '<div class="aviso">Passa do limite do ' + r.nome + '. O S-post avisa antes de publicar e deixa-te encurtar só esta versão.</div>' : '') +
+        '</article>';
+    }).join('');
+  }
+  previas.addEventListener('click', function (e) { var b = e.target.closest('[data-abre]'); if (b) { abertas[b.dataset.abre] = 1; desenhaPrevias(); } });
+  texto.addEventListener('input', function () { abertas = {}; desenhaPrevias(); });
+  escolha.addEventListener('change', desenhaPrevias);
+  document.getElementById('b-hash').addEventListener('click', function () {
+    if (!/#ArteUrbana/.test(texto.value)) texto.value = texto.value.trim() + '\n\n#ArteUrbana #Graffiti #Lisboa #CulturaLivre'; abertas = {}; desenhaPrevias(); });
+  document.getElementById('b-link').addEventListener('click', function () {
+    if (!/https:\/\/s-post\.aauts\.pt/.test(texto.value)) texto.value = texto.value.trim() + '\nMais info: https://s-post.aauts.pt'; abertas = {}; desenhaPrevias(); });
+  document.getElementById('b-repor').addEventListener('click', function () { texto.value = ORIGINAL; abertas = {}; desenhaPrevias(); });
+  desenhaPrevias();
+})();
+</script>
 </body>
 </html>

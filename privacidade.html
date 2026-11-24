@@ -1,33 +1,64 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="referrer" content="no-referrer">
-  <title>Política de privacidade — S-post | AAUTS</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Política de privacidade — S-post | AAUTS</title>
+<link rel="icon" href="media/logo-spost.webp">
+<meta name="theme-color" content="#141722">
+<link rel="stylesheet" href="legal.css">
 </head>
 <body>
-<nav aria-label="Navegação principal">
-  <a href="index.html">S-post</a>
-  <a href="https://www.aauts.pt/deskai/spost/s-post.php">Descarregar</a>
-  <a href="termos.html">Termos de utilização</a>
-  <a href="privacidade.html" aria-current="page">Política de privacidade</a>
-  <a href="mailto:aauts.dir@gmail.com">Contacto AAUTS</a>
-</nav>
-<main>
-  <header><p>S-POST | AAUTS, By Lemba</p><h1>Política de privacidade</h1><p>Última atualização: 20 de novembro de 2026.</p></header>
-  <section>
-    <h2>1. Âmbito e responsável</h2>
+<header>
+  <div class="wrap">
+    <a class="logo" href="./"><img src="media/logo-spost-branco.webp" alt="S-post" width="240" height="180"></a>
+    <nav aria-label="Navegação principal">
+      <a href="./">Início</a>
+      <a href="privacidade.html" aria-current="page">Privacidade</a>
+      <a href="termos.html">Termos</a>
+      <a class="btn" href="https://www.aauts.pt/deskai/spost/s-post.php">Descarregar</a>
+    </nav>
+  </div>
+</header>
+
+<div class="topo-legal">
+  <div class="wrap">
+    <span class="kicker">Privacidade</span>
+    <h1>Política de privacidade</h1>
+    <p class="data">Última atualização: 20 de novembro de 2026.</p>
+  </div>
+</div>
+
+<main class="wrap legal">
+  <nav class="indice" aria-label="Índice">
+    <a href="#s1">1. Âmbito e responsável</a>
+    <a href="#s2">2. Conteúdos e preferências locais</a>
+    <a href="#s3">3. Ligações às redes e ao teu site</a>
+    <a href="#s4">3A. Canva (importar designs)</a>
+    <a href="#s5">4. Dados de utilizador Google (YouTube)</a>
+    <a href="#s6">5. Serviço de ligações da AAUTS</a>
+    <a href="#s7">6. Páginas de retorno do login</a>
+    <a href="#s8">7. Alojamento temporário de imagens (Instagram)</a>
+    <a href="#s9">8. App Android e ligação ao computador</a>
+    <a href="#s10">9. IA e publicação externa</a>
+    <a href="#s11">10. Finalidades e fundamentos</a>
+    <a href="#s12">11. Conservação e eliminação</a>
+    <a href="#s13">12. Cookies, recursos e segurança</a>
+    <a href="#s14">13. Direitos e contacto</a>
+    <a href="#s15">14. Alterações</a>
+  </nav>
+
+    <h2 id="s1">1. Âmbito e responsável</h2>
     <p>Esta política descreve o funcionamento atual do S-post, das suas páginas de apresentação e dos serviços de apoio alojados em <code>aauts.pt</code> (páginas de retorno de login, serviço de ligações, alojamento temporário de imagens e ligação cifrada entre o telemóvel e o computador). A entidade responsável é a <strong>AAUTS</strong>. Contacto de suporte e privacidade: <a href="mailto:aauts.dir@gmail.com">aauts.dir@gmail.com</a>.</p>
     <p><strong>Compras e licenças da versão desktop:</strong> o responsável é <strong>Lemba Design</strong> (trabalhador independente, Rua Almeida e Sousa, n.º 33, cave dta., Campo de Ourique, 1350-008 Lisboa, Portugal), que vende o S-post em parceria com a AAUTS. Para entregar e validar a licença e emitir a fatura, são tratados o nome e o email do comprador, os dados do pagamento indicados pelo próprio (MB WAY ou PayPal) e, no servidor de licenças, apenas impressões digitais SHA-256 do código e dos computadores ativados. Estes dados são conservados enquanto a licença existir e pelo prazo legal de conservação dos documentos de faturação.</p>
     <p>O S-post funciona no computador do utilizador, numa interface web local ou janela desktop. Os conteúdos que crias não são enviados para a AAUTS. Os serviços externos que escolhes ligar (redes sociais, o teu site, fornecedores de IA) têm práticas próprias de tratamento de dados.</p>
 
-    <h2>2. Conteúdos e preferências locais</h2>
+    <h2 id="s2">2. Conteúdos e preferências locais</h2>
     <p>A aplicação processa os textos, títulos, versões por rede, imagens, vídeos, legendas, metadados, modelos, campanhas, hashtags e perfil da marca que introduzes, para permitir criar, guardar, recuperar, exportar, planear e publicar conteúdos.</p>
     <p>Guarda preferências de idioma, tema e configuração de IA, a fila de planeamento, os resultados das publicações e cópias de recuperação. Estes dados ficam no computador onde corre o S-post: por defeito em <code>output\spost</code> (versão web) ou <code>%LOCALAPPDATA%\S-post</code> (versão desktop). Não existe sincronização entre computadores; com a app Android, o telemóvel e o computador emparelhados trocam publicações cifradas (secção 8).</p>
 
-    <h2>3. Ligações às redes e ao teu site</h2>
+    <h2 id="s3">3. Ligações às redes e ao teu site</h2>
     <p>As ligações são opcionais. Em cada rede fazes o login e escolhes a conta no site oficial; o S-post recebe um código de autorização e troca-o por um token de acesso. Usa esse token para confirmar a identidade da conta e, só quando confirmas uma publicação (ou a agendas como automática), para enviar o conteúdo escolhido.</p>
     <ul>
       <li><strong>Facebook:</strong> identificador, nome e token das Páginas que autorizas (<code>pages_show_list</code>, <code>pages_read_engagement</code>, <code>pages_manage_posts</code>).</li>
@@ -41,11 +72,11 @@
     </ul>
     <p>Tokens e configurações ficam no <strong>Gestor de Credenciais do Windows</strong> do teu utilizador, neste computador. Rascunhos, recuperação e exportações nunca os incluem. Remover uma ligação no S-post não revoga a autorização na plataforma: para isso usa as definições de aplicações autorizadas de cada rede.</p>
 
-    <h2>3A. Canva (importar designs)</h2>
+    <h2 id="s4">3A. Canva (importar designs)</h2>
     <p>A ligação ao Canva é opcional e serve apenas para trazeres os teus próprios designs para um post. Fazes o login no site oficial do Canva e autorizas o S-post com três permissões de leitura: <code>design:meta:read</code> (ver a lista dos teus designs, com nome, miniatura e número de páginas), <code>design:content:read</code> (exportar o design que escolhes em PNG, JPG ou MP4) e <code>profile:read</code> (mostrar o nome da conta ligada). O S-post não cria, altera nem apaga nada no teu Canva.</p>
     <p>O design exportado é descarregado diretamente do Canva para a pasta do S-post no teu computador e passa a ser um anexo do post, como qualquer ficheiro teu; só é publicado se confirmares a publicação. O login passa pela página de retorno e pelo serviço de ligações da AAUTS (secções 5 e 6), que acrescenta a chave da app sem guardar tokens. O token de renovação fica no Gestor de Credenciais do Windows. Para retirar o acesso, carrega em «Desligar» no S-post e revoga a app nas definições da tua conta Canva (Definições › Apps ligadas ou Integrações).</p>
 
-    <h2>4. Dados de utilizador Google (YouTube)</h2>
+    <h2 id="s5">4. Dados de utilizador Google (YouTube)</h2>
     <p>O login Google é opcional e pede apenas estas permissões:</p>
     <ul>
       <li><code>https://www.googleapis.com/auth/youtube.upload</code> — para carregar os vídeos (e miniaturas) que escolhes publicar, com título, descrição, categoria, etiquetas, visibilidade e indicação de conteúdo para crianças que definires.</li>
@@ -55,19 +86,19 @@
     <p>Os dados recebidos das APIs Google não são vendidos, não são usados para publicidade, não são transferidos para terceiros (exceto para enviar o vídeo ao YouTube a teu pedido) e não são usados para treinar modelos de inteligência artificial. Podes revogar o acesso a qualquer momento em <a href="https://myaccount.google.com/permissions" rel="noopener noreferrer">myaccount.google.com/permissions</a>.</p>
     <p lang="en"><strong>Limited Use:</strong> S-post's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
 
-    <h2>5. Serviço de ligações da AAUTS</h2>
+    <h2 id="s6">5. Serviço de ligações da AAUTS</h2>
     <p>Para que não precises de criar apps de programador, o S-post vem com ligações pré-configuradas às apps da AAUTS. As operações que exigem o segredo dessas apps são feitas por um serviço em <code>aauts.pt</code>: trocar o código de autorização por um token, renovar tokens (TikTok, YouTube e Canva), confirmar a validade de tokens e calcular a prova de segredo exigida pela Meta em cada envio. Para isso, o serviço recebe temporariamente o código, o token de renovação ou o token de acesso necessários.</p>
     <p>O serviço não guarda códigos nem tokens, não os associa a outros dados e não publica nada. Mantém apenas um contador técnico de pedidos por endereço IP, durante 10 minutos, para evitar abusos. Se configurares a tua própria app de programador, o S-post deixa de usar este serviço.</p>
 
-    <h2>6. Páginas de retorno do login</h2>
+    <h2 id="s7">6. Páginas de retorno do login</h2>
     <p>Depois de autorizares, a rede envia-te para uma página de retorno em <code>aauts.pt</code> com um código temporário e um <code>state</code> no endereço. A página entrega esse código diretamente ao S-post no teu computador (endereço local <code>127.0.0.1</code>) ou, em alternativa, mostra-o para o colares no S-post. A página não troca o código por token, não guarda tokens e não publica conteúdos.</p>
     <p>O alojamento, proxy ou serviços de segurança do site podem registar dados técnicos dos acessos (IP, data/hora, endereço pedido, potencialmente incluindo os parâmetros recebidos). A retenção depende do prestador de alojamento; para esclarecimentos, contacta a AAUTS.</p>
 
-    <h2>7. Alojamento temporário de imagens (Instagram)</h2>
+    <h2 id="s8">7. Alojamento temporário de imagens (Instagram)</h2>
     <p>O Instagram só aceita imagens a partir de um endereço público. Para as publicar, o S-post envia cada imagem, convertida em JPEG, para um alojamento temporário (o teu próprio site ou o alojamento partilhado da AAUTS), entrega o endereço ao Instagram e apaga a imagem logo a seguir. Imagens que fiquem por qualquer motivo são apagadas automaticamente ao fim de 24 horas.</p>
     <p>No alojamento partilhado, cada envio é acompanhado do teu token do Instagram, confirmado junto da Meta para garantir que só contas ligadas pelo S-post o usam. O alojamento guarda apenas uma impressão digital (hash) desse token, durante uma hora, para não repetir a confirmação, e um contador de envios por hora.</p>
 
-    <h2>8. App Android e ligação ao computador</h2>
+    <h2 id="s9">8. App Android e ligação ao computador</h2>
     <p>A app S-post para Android guarda no telemóvel as publicações, rascunhos e preferências (língua, aspeto e modo).
       As ligações que fizeres nela (WordPress e AVAI, no modo «Só no telemóvel») ficam no armazenamento cifrado do
       Android (Keystore) e são usadas só para publicar o que confirmares, diretamente nesses serviços, sem passar pela AAUTS.</p>
@@ -82,15 +113,15 @@
       contador técnico de pedidos por endereço IP durante 10 minutos. Ao remover o telemóvel no computador, o canal e
       as mensagens pendentes são apagados.</p>
 
-    <h2>9. IA e publicação externa</h2>
+    <h2 id="s10">9. IA e publicação externa</h2>
     <p>Quando pedes uma sugestão de texto, o texto e as instruções (incluindo o contexto de marca ou campanha selecionado) são enviados ao fornecedor de IA e endereço que configuraste. Os anexos não são enviados à IA. Com um servidor local, o pedido fica no teu computador ou rede; com uma API externa, o fornecedor trata os dados segundo os seus termos.</p>
     <p>Ao confirmares uma publicação, o conteúdo e os anexos aplicáveis são transmitidos aos destinos escolhidos e podem tornar-se públicos, conforme a visibilidade escolhida. Se agendares uma publicação como automática e ativares a tarefa do Windows, o S-post publica-a à hora marcada sem nova confirmação, com as ligações guardadas neste computador. A AAUTS não controla a retenção ou utilização de dados pelas plataformas; consulta as respetivas políticas.</p>
 
-    <h2>10. Finalidades e fundamentos</h2>
+    <h2 id="s11">10. Finalidades e fundamentos</h2>
     <p>Os dados são utilizados apenas para executar as funcionalidades que pedes, gerir as ligações autorizadas e responder a pedidos de suporte. O consentimento dado em cada plataforma permite a ligação; não é uma autorização genérica para outras finalidades. A AAUTS não usa os dados para publicidade, venda ou criação de perfis.</p>
     <p>Na medida em que a AAUTS trate dados pessoais nos seus serviços de apoio, suporte ou infraestrutura, os fundamentos são a prestação do serviço pedido e os interesses legítimos de segurança e operação, ou obrigações legais, conforme o caso.</p>
 
-    <h2>11. Conservação e eliminação</h2>
+    <h2 id="s12">11. Conservação e eliminação</h2>
     <ul>
       <li><strong>Conteúdo local:</strong> permanece enquanto o conservares na pasta de dados. Para o eliminar, fecha a aplicação e apaga essa pasta (faz antes cópia do que queres manter).</li>
       <li><strong>Recuperação:</strong> as cópias de sessões anteriores podem ser restauradas ou descartadas na app, uma a uma ou todas de uma vez.</li>
@@ -100,17 +131,24 @@
       <li><strong>Suporte e registos do site:</strong> conservados o tempo necessário ao pedido, à segurança e às obrigações legais. Contacta a AAUTS para pedir eliminação.</li>
     </ul>
 
-    <h2>12. Cookies, recursos e segurança</h2>
+    <h2 id="s13">12. Cookies, recursos e segurança</h2>
     <p>As páginas de apresentação, termos e privacidade não incluem scripts de análise, anúncios ou recursos de terceiros e não definem cookies. A comunicação com os serviços em <code>aauts.pt</code> e com as plataformas é feita por HTTPS.</p>
     <p>Rascunhos, anexos e recuperação locais não são cifrados pelo S-post: protege a conta do sistema, o disco e as cópias de segurança. A interface local não tem autenticação multiutilizador e não deve ser exposta na internet. Nunca envies credenciais ou códigos de autorização para o suporte.</p>
 
-    <h2>13. Direitos e contacto</h2>
+    <h2 id="s14">13. Direitos e contacto</h2>
     <p>Quando aplicável, podes pedir acesso, retificação, eliminação, limitação, oposição e portabilidade dos dados pessoais tratados pela AAUTS, ou retirar consentimento. Contacta <a href="mailto:aauts.dir@gmail.com">aauts.dir@gmail.com</a>, sem incluir segredos. A AAUTS não tem acesso à tua pasta local nem ao teu Gestor de Credenciais: essa eliminação é feita no teu computador. Podes apresentar reclamação à autoridade de proteção de dados competente; em Portugal, à <a href="https://www.cnpd.pt/" rel="noopener noreferrer">CNPD</a>.</p>
 
-    <h2>14. Alterações</h2>
+    <h2 id="s15">14. Alterações</h2>
     <p>Atualizações serão publicadas nesta página com a data de revisão. Alterações materiais ao tratamento de dados serão refletidas aqui antes de entrarem em funcionamento.</p>
-  </section>
+
 </main>
-<footer>S-POST | AAUTS, By Lemba · <a href="index.html">Aplicação</a> · <a href="termos.html">Termos de utilização</a></footer>
+
+<footer>
+  <div class="wrap">
+    <img src="media/logo-spost-branco.webp" alt="S-post" width="240" height="180">
+    <span><a href="termos.html">Termos de utilização</a> · <a href="privacidade.html">Política de privacidade</a> ·
+      <a href="mailto:aauts.dir@gmail.com">aauts.dir@gmail.com</a> · S-POST | AAUTS, By Lemba</span>
+  </div>
+</footer>
 </body>
 </html>
