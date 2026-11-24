@@ -124,19 +124,40 @@ h1 .rodar span{display:inline-block;animation:entra .55s cubic-bezier(.2,.8,.2,1
 @keyframes aparece{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .passos{display:grid;gap:12px;counter-reset:p}
 .passo{display:grid;grid-template-columns:50px 1fr;gap:14px;align-items:start;background:var(--cartao);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:16px 18px;
-  transition:border-color .2s, transform .2s}
+  transition:border-color .2s, transform .2s, background .2s;font:inherit;color:inherit;text-align:left;cursor:pointer;width:100%;position:relative;overflow:hidden}
+.passo.on{border-color:var(--roxo2);background:linear-gradient(90deg,rgba(104,68,212,.22),var(--cartao) 70%)}
+.passo.on::after{content:"";position:absolute;left:0;bottom:0;height:3px;background:var(--roxo2);animation:enche var(--tempo,5s) linear forwards}
+.passo.parado::after{animation:none;width:100%;opacity:.5}
+@keyframes enche{from{width:0}to{width:100%}}
+.passo b{display:block;margin:2px 0 3px;font-size:1.08rem}
+.passo > span:last-child > span{display:block;color:var(--suave);font-size:.95rem}
 .passo:hover{border-color:rgba(190,170,255,.55);transform:translateX(4px)}
 .passo .n{counter-increment:p;width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:#fff;
   background:linear-gradient(135deg,#7a5be0,var(--roxo))}
 .passo .n::before{content:counter(p)}
-.passo h3{margin:2px 0 3px;font-size:1.08rem}
-.passo p{margin:0;color:var(--suave);font-size:.95rem}
 .ecra-pc{border-radius:18px;border:1px solid var(--borda);box-shadow:0 30px 60px rgba(0,0,0,.5);overflow:hidden;background:#fff}
 .ecra-pc .barra{display:flex;gap:6px;padding:9px 12px;background:var(--lateral)}
 .ecra-pc .barra i{width:10px;height:10px;border-radius:50%;background:#41465e}
-.tels{display:flex;gap:18px;justify-content:center}
-.tels img{width:min(230px,44%);border-radius:30px;border:8px solid var(--lateral);box-shadow:0 30px 60px rgba(0,0,0,.55)}
-.tels img:last-child{margin-top:46px}
+.vistas{display:grid}
+.vistas img{grid-area:1/1;width:100%;height:auto;opacity:0;transition:opacity .6s ease}
+.vistas img.on{opacity:1}
+.tel-caixa{display:flex;flex-direction:column;align-items:center;gap:18px}
+.telefone{position:relative;width:min(290px,80%);aspect-ratio:520/1126;border-radius:38px;border:10px solid #0d0f17;background:#0d0f17;overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 2px rgba(190,170,255,.18);cursor:pointer}
+.telefone .ecra{position:absolute;inset:0;opacity:0;transition:opacity .6s ease}
+.telefone .ecra.on{opacity:1}
+.telefone img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .9s ease}
+.telefone .escuro{opacity:0}
+.telefone.noite .escuro{opacity:1}
+.telefone.noite .claro{opacity:0}
+.modo{display:inline-flex;align-items:center;gap:10px;background:var(--cartao);border:1px solid var(--borda);color:var(--texto);border-radius:999px;padding:8px 16px;
+  font:inherit;font-weight:700;font-size:.9rem;cursor:pointer;transition:border-color .2s}
+.modo:hover{border-color:var(--roxo2)}
+.modo .sol{color:#ffd36b;font-size:1.05rem}.modo .lua{color:var(--roxo2);font-size:1.05rem}
+.modo .trilho{width:42px;height:24px;border-radius:999px;background:#e8eaf6;position:relative;transition:background .4s}
+.modo .trilho i{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--roxo);transition:transform .4s cubic-bezier(.3,.9,.3,1)}
+.modo[aria-pressed="true"] .trilho{background:var(--tinta)}
+.modo[aria-pressed="true"] .trilho i{transform:translateX(18px);background:var(--roxo2)}
 
 /* ---------- experimenta ---------- */
 .lab{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:start}
@@ -173,7 +194,7 @@ h1 .rodar span{display:inline-block;animation:entra .55s cubic-bezier(.2,.8,.2,1
 .galeria{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .fig{margin:0;background:var(--cartao);border:1px solid rgba(255,255,255,.07);border-radius:var(--raio);overflow:hidden;transition:transform .25s, border-color .25s}
 .fig:hover{transform:translateY(-6px);border-color:rgba(190,170,255,.5)}
-.fig img{aspect-ratio:3/2;object-fit:cover;object-position:top left;width:100%;background:#fff}
+.fig img{aspect-ratio:3/2;object-fit:cover;object-position:top left;width:100%;height:auto;background:#fff}
 .fig figcaption{padding:16px 18px}
 .fig figcaption b{display:block;margin-bottom:3px}
 .fig figcaption span{color:var(--suave);font-size:.93rem}
@@ -336,25 +357,39 @@ footer img{height:34px;width:auto}
 
     <div class="lado on" id="lado-pc">
       <div class="passos">
-        <div class="passo"><span class="n"></span><div><h3>Escreve e escolhe as redes</h3><p>Texto base, anexos e versões por rede, com a pré-visualização de todas lado a lado.</p></div></div>
-        <div class="passo"><span class="n"></span><div><h3>Adapta e revê os avisos</h3><p>Uma lista de passos mostra o que falta para publicar; a IA opcional corrige, encurta ou muda o tom.</p></div></div>
-        <div class="passo"><span class="n"></span><div><h3>Guarda ou planeia</h3><p>Rascunhos, modelos, campanhas e calendário, com envio manual ou automático à hora marcada.</p></div></div>
-        <div class="passo"><span class="n"></span><div><h3>Liga as contas e publica</h3><p>Login no site oficial de cada rede; depois confirmas a publicação, ou agendas-a como automática.</p></div></div>
+        <button type="button" class="passo on" data-grupo="pc" data-i="0"><span class="n"></span><span><b>Escreve e escolhe as redes</b><span>Texto base, anexos e versões por rede, com a pré-visualização de todas lado a lado.</span></span></button>
+        <button type="button" class="passo" data-grupo="pc" data-i="1"><span class="n"></span><span><b>Adapta e revê os avisos</b><span>Uma lista de passos mostra o que falta para publicar; a IA opcional corrige, encurta ou muda o tom.</span></span></button>
+        <button type="button" class="passo" data-grupo="pc" data-i="2"><span class="n"></span><span><b>Guarda ou planeia</b><span>Rascunhos, modelos, campanhas e calendário, com envio manual ou automático à hora marcada.</span></span></button>
+        <button type="button" class="passo" data-grupo="pc" data-i="3"><span class="n"></span><span><b>Liga as contas e publica</b><span>Login no site oficial de cada rede; depois confirmas a publicação, ou agendas-a como automática.</span></span></button>
       </div>
-      <div class="ecra-pc rv"><div class="barra"><i></i><i></i><i></i></div>
-        <img src="media/editor.webp" alt="Editor do S-post: escrever uma vez e ver todas as redes lado a lado" width="1440" height="960" loading="lazy"></div>
+      <div class="ecra-pc" id="ecras-pc"><div class="barra"><i></i><i></i><i></i></div>
+        <div class="vistas">
+          <img class="on" src="media/pc-escrever.webp" alt="Editor do S-post: as redes escolhidas e a pré-visualização lado a lado" width="1080" height="630" loading="lazy">
+          <img class="" src="media/pc-ia.webp" alt="Assistente de IA do S-post: corrigir, encurtar, mudar o tom" width="720" height="480" loading="lazy">
+          <img class="" src="media/pc-planeamento.webp" alt="Planeamento e histórico do S-post" width="1100" height="733" loading="lazy">
+          <img class="" src="media/pc-ligacoes.webp" alt="Página Ver ligações do S-post" width="1020" height="680" loading="lazy">
+        </div>
+      </div>
     </div>
 
     <div class="lado" id="lado-tel">
       <div class="passos">
-        <div class="passo"><span class="n"></span><div><h3>Emparelha com um código QR</h3><p>Em «Contas e ajustes → Telemóvel», lês o código com a app Android.</p></div></div>
-        <div class="passo"><span class="n"></span><div><h3>Escreve onde estiveres</h3><p>Texto, fotos ou vídeo, e as redes onde queres publicar.</p></div></div>
-        <div class="passo"><span class="n"></span><div><h3>Agenda para o computador publicar</h3><p>Modo «Com o meu PC»: o computador publica por ti, à hora que escolheste.</p></div></div>
-        <div class="passo"><span class="n"></span><div><h3>Ou publica já do telemóvel</h3><p>Modo «Só no telemóvel»: publicas na hora no WordPress, no AVAI, no Bluesky e no YouTube.</p></div></div>
+        <button type="button" class="passo on" data-grupo="tel" data-i="0"><span class="n"></span><span><b>Emparelha com um código QR</b><span>Na app, em Definições → «Emparelhar com o PC», lês o código QR que o computador mostra em «Contas e ajustes → Telemóvel».</span></span></button>
+        <button type="button" class="passo" data-grupo="tel" data-i="1"><span class="n"></span><span><b>Escreve onde estiveres</b><span>Texto, fotos ou vídeo, e as redes onde queres publicar.</span></span></button>
+        <button type="button" class="passo" data-grupo="tel" data-i="2"><span class="n"></span><span><b>Agenda para o computador publicar</b><span>Modo «Com o meu PC»: escolhes a hora, ligas «Publicar automaticamente» e o computador publica por ti.</span></span></button>
+        <button type="button" class="passo" data-grupo="tel" data-i="3"><span class="n"></span><span><b>Ou publica já do telemóvel</b><span>Modo «Só no telemóvel»: publicas na hora no WordPress, no AVAI, no Bluesky e no YouTube.</span></span></button>
       </div>
-      <div class="tels">
-        <img src="media/android-inicio.webp" alt="App Android do S-post: ecrã inicial" width="260" height="562" loading="lazy">
-        <img src="media/android-compor.webp" alt="App Android do S-post: nova publicação com as redes" width="260" height="562" loading="lazy">
+      <div class="tel-caixa">
+        <button type="button" class="modo" id="modo" aria-pressed="false" title="Mudar entre modo claro e escuro">
+          <span class="sol" aria-hidden="true">☀</span><span class="trilho"><i></i></span><span class="lua" aria-hidden="true">☾</span>
+          <span id="modo-txt">Modo claro</span>
+        </button>
+        <div class="telefone" id="telefone">
+          <div class="ecra on"><img class="claro" src="media/android-emparelhar-claro.webp" alt="App Android do S-post, modo claro: definições com Emparelhar com o PC" width="520" height="1126" loading="lazy"><img class="escuro" src="media/android-emparelhar-escuro.webp" alt="App Android do S-post, modo escuro: definições com Emparelhar com o PC" width="520" height="1126" loading="lazy"></div>
+          <div class="ecra"><img class="claro" src="media/android-escrever-claro.webp" alt="App Android do S-post, modo claro: nova publicação com o texto e as redes escolhidas" width="520" height="1126" loading="lazy"><img class="escuro" src="media/android-escrever-escuro.webp" alt="App Android do S-post, modo escuro: nova publicação com o texto e as redes escolhidas" width="520" height="1126" loading="lazy"></div>
+          <div class="ecra"><img class="claro" src="media/android-agendar-claro.webp" alt="App Android do S-post, modo claro: hora da publicação e botão Agendar" width="520" height="1126" loading="lazy"><img class="escuro" src="media/android-agendar-escuro.webp" alt="App Android do S-post, modo escuro: hora da publicação e botão Agendar" width="520" height="1126" loading="lazy"></div>
+          <div class="ecra"><img class="claro" src="media/android-telemovel-claro.webp" alt="App Android do S-post, modo claro: modo Só no telemóvel e as contas do telemóvel" width="520" height="1126" loading="lazy"><img class="escuro" src="media/android-telemovel-escuro.webp" alt="App Android do S-post, modo escuro: modo Só no telemóvel e as contas do telemóvel" width="520" height="1126" loading="lazy"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -392,18 +427,12 @@ footer img{height:34px;width:auto}
     <h2 class="rv d1">Tudo <em>num só espaço</em>.</h2>
     <p class="sub rv d2">Sem andar de aplicação em aplicação. O trabalho fica guardado no teu computador.</p>
     <div class="galeria">
-      <figure class="fig rv"><img src="media/anexos-canva.webp" alt="Anexos do Canva no S-post" width="1440" height="960" loading="lazy">
+      <figure class="fig rv"><img src="media/galeria-canva.webp" alt="Separador Anexos do S-post com Importar do Canva" width="720" height="480" loading="lazy">
         <figcaption><b>Os teus designs do Canva</b><span>Importa imagens e vídeos do Canva diretamente para o post, sem descarregar ficheiros.</span></figcaption></figure>
-      <figure class="fig rv d1"><img src="media/ia.webp" alt="Assistente de IA do S-post" width="1440" height="960" loading="lazy">
-        <figcaption><b>Assistente de IA e passos claros</b><span>Corrigir, encurtar ou mudar o tom, e uma lista que mostra o que falta para publicar.</span></figcaption></figure>
-      <figure class="fig rv d2"><img src="media/ver-ligacoes.webp" alt="Página Ver ligações do S-post" width="1440" height="960" loading="lazy">
-        <figcaption><b>Liga as tuas redes em minutos</b><span>Com o login oficial de cada rede; um ponto verde mostra as contas ligadas.</span></figcaption></figure>
-      <figure class="fig rv"><img src="media/planeamento.webp" alt="Calendário de planeamento do S-post" width="1440" height="960" loading="lazy">
-        <figcaption><b>Planeia e publica à hora certa</b><span>Calendário com publicação automática (tarefa do Windows, ativada por ti).</span></figcaption></figure>
-      <figure class="fig rv d1"><img src="media/biblioteca.webp" alt="Biblioteca de conteúdos do S-post" width="1440" height="960" loading="lazy">
-        <figcaption><b>Modelos e perfil da marca</b><span>O tom de voz e o logótipo da tua marca em todas as publicações.</span></figcaption></figure>
-      <figure class="fig rv d2"><img src="media/rascunhos.webp" alt="Rascunhos do S-post" width="1440" height="960" loading="lazy">
-        <figcaption><b>Rascunhos que não se perdem</b><span>Rascunhos e cópias locais de recuperação do trabalho pendente.</span></figcaption></figure>
+      <figure class="fig rv d1"><img src="media/galeria-biblioteca.webp" alt="Biblioteca de conteúdos do S-post: modelos, campanhas, hashtags e perfil da marca" width="1030" height="687" loading="lazy">
+        <figcaption><b>Modelos e perfil da marca</b><span>Modelos de posts, campanhas, grupos de hashtags e o perfil da tua marca.</span></figcaption></figure>
+      <figure class="fig rv d2"><img src="media/galeria-rascunhos.webp" alt="Rascunhos guardados no S-post" width="1100" height="733" loading="lazy">
+        <figcaption><b>Rascunhos que não se perdem</b><span>Retomas uma ideia quando quiseres: abres no editor e continuas.</span></figcaption></figure>
     </div>
     <div class="video rv">
       <video controls preload="none" poster="media/S-post-apresentacao.jpg" playsinline aria-label="Apresentação do S-post">
@@ -615,6 +644,42 @@ footer img{height:34px;width:auto}
     document.getElementById('lado-tel').classList.toggle('on', nome === 'tel');
   }
   botoes.forEach(function (b) { b.addEventListener('click', function () { lado(b.dataset.lado); }); });
+
+  // passos ligados às imagens: avançam sozinhos (5 s) e também se clicam
+  var TEMPO = 5000, atual = { pc: 0, tel: 0 }, relogio = null;
+  function mostra(grupo, i, parar) {
+    atual[grupo] = i;
+    document.querySelectorAll('.passo[data-grupo="' + grupo + '"]').forEach(function (p, k) {
+      p.classList.remove('on'); p.classList.toggle('parado', !!parar && k === i); p.setAttribute('aria-pressed', k === i);
+      if (k === i) { void p.offsetWidth; p.classList.add('on'); }
+    });
+    var vistas = grupo === 'pc' ? document.querySelectorAll('#ecras-pc .vistas img') : document.querySelectorAll('#telefone .ecra');
+    vistas.forEach(function (v, k) { v.classList.toggle('on', k === i); });
+  }
+  function grupoVisivel() { return document.getElementById('lado-tel').classList.contains('on') ? 'tel' : 'pc'; }
+  function arranca() {
+    clearInterval(relogio);
+    if (reduzir) return;
+    relogio = setInterval(function () { var g = grupoVisivel(); mostra(g, (atual[g] + 1) % 4); }, TEMPO);
+  }
+  document.querySelectorAll('.passo[data-grupo]').forEach(function (p) {
+    p.style.setProperty('--tempo', TEMPO / 1000 + 's');
+    p.addEventListener('click', function () { mostra(p.dataset.grupo, +p.dataset.i); arranca(); });
+  });
+  botoes.forEach(function (b) { b.addEventListener('click', function () { mostra(b.dataset.lado, 0, reduzir); arranca(); }); });
+  if (reduzir) { mostra('pc', 0, true); mostra('tel', 0, true); } else arranca();
+
+  // telemóvel: modo claro e escuro em ciclo (3,5 s); um clique no botão ou no ecrã muda já
+  var tel = document.getElementById('telefone'), modo = document.getElementById('modo'), modoTxt = document.getElementById('modo-txt'), ciclo = null;
+  function poeModo(noite) {
+    tel.classList.toggle('noite', noite); modo.setAttribute('aria-pressed', noite);
+    modoTxt.textContent = noite ? 'Modo escuro' : 'Modo claro';
+  }
+  function trocaModo() { poeModo(!tel.classList.contains('noite')); cicloModo(); }
+  function cicloModo() { clearInterval(ciclo); if (!reduzir) ciclo = setInterval(function () { poeModo(!tel.classList.contains('noite')); }, 3500); }
+  modo.addEventListener('click', trocaModo);
+  tel.addEventListener('click', trocaModo);
+  cicloModo();
   addEventListener('load', function () { lado('pc'); });
   addEventListener('resize', function () { var on = document.querySelector('.lados button.on'); if (on) lado(on.dataset.lado); });
 
