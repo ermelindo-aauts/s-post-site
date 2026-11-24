@@ -26,7 +26,7 @@
   <div class="wrap">
     <span class="kicker">Privacidade</span>
     <h1>Política de privacidade</h1>
-    <p class="data">Última atualização: 20 de novembro de 2026.</p>
+    <p class="data">Última atualização: 24 de novembro de 2026.</p>
   </div>
 </div>
 
@@ -82,7 +82,7 @@
       <li><code>https://www.googleapis.com/auth/youtube.upload</code> — para carregar os vídeos (e miniaturas) que escolhes publicar, com título, descrição, categoria, etiquetas, visibilidade e indicação de conteúdo para crianças que definires.</li>
       <li><code>https://www.googleapis.com/auth/youtube.readonly</code> — apenas para ler o identificador e o nome do teu canal, para confirmar e mostrar em que canal vais publicar.</li>
     </ul>
-    <p>O S-post não lê os teus vídeos, comentários, estatísticas, subscritores ou outros dados da conta Google. O token de renovação fica guardado no Gestor de Credenciais do Windows do teu computador e é usado só para renovar o acesso antes de cada envio. Quando usas a ligação pré-configurada, a troca do código e a renovação passam pelo serviço de ligações da AAUTS (secção 5), que não guarda esses dados.</p>
+    <p>O S-post não lê os teus vídeos, comentários, estatísticas, subscritores ou outros dados da conta Google. O token de renovação fica guardado no Gestor de Credenciais do Windows do teu computador ou, se ligares o YouTube na app Android, no armazenamento cifrado do Android (Keystore) do telemóvel, e é usado só para renovar o acesso antes de cada envio. Quando usas a ligação pré-configurada, a troca do código e a renovação passam pelo serviço de ligações da AAUTS (secção 5), que não guarda esses dados.</p>
     <p>Os dados recebidos das APIs Google não são vendidos, não são usados para publicidade, não são transferidos para terceiros (exceto para enviar o vídeo ao YouTube a teu pedido) e não são usados para treinar modelos de inteligência artificial. Podes revogar o acesso a qualquer momento em <a href="https://myaccount.google.com/permissions" rel="noopener noreferrer">myaccount.google.com/permissions</a>.</p>
     <p lang="en"><strong>Limited Use:</strong> S-post's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
 
@@ -91,7 +91,7 @@
     <p>O serviço não guarda códigos nem tokens, não os associa a outros dados e não publica nada. Mantém apenas um contador técnico de pedidos por endereço IP, durante 10 minutos, para evitar abusos. Se configurares a tua própria app de programador, o S-post deixa de usar este serviço.</p>
 
     <h2 id="s7">6. Páginas de retorno do login</h2>
-    <p>Depois de autorizares, a rede envia-te para uma página de retorno em <code>aauts.pt</code> com um código temporário e um <code>state</code> no endereço. A página entrega esse código diretamente ao S-post no teu computador (endereço local <code>127.0.0.1</code>) ou, em alternativa, mostra-o para o colares no S-post. A página não troca o código por token, não guarda tokens e não publica conteúdos.</p>
+    <p>Depois de autorizares, a rede envia-te para uma página de retorno em <code>aauts.pt</code> com um código temporário e um <code>state</code> no endereço. A página entrega esse código diretamente ao S-post no teu computador (endereço local <code>127.0.0.1</code>) ou à app S-post no telemóvel (endereço <code>spost://</code>) ou, em alternativa, mostra-o para o colares no S-post. A página não troca o código por token, não guarda tokens e não publica conteúdos.</p>
     <p>O alojamento, proxy ou serviços de segurança do site podem registar dados técnicos dos acessos (IP, data/hora, endereço pedido, potencialmente incluindo os parâmetros recebidos). A retenção depende do prestador de alojamento; para esclarecimentos, contacta a AAUTS.</p>
 
     <h2 id="s8">7. Alojamento temporário de imagens (Instagram)</h2>
@@ -100,8 +100,9 @@
 
     <h2 id="s9">8. App Android e ligação ao computador</h2>
     <p>A app S-post para Android guarda no telemóvel as publicações, rascunhos e preferências (língua, aspeto e modo).
-      As ligações que fizeres nela (WordPress e AVAI, no modo «Só no telemóvel») ficam no armazenamento cifrado do
-      Android (Keystore) e são usadas só para publicar o que confirmares, diretamente nesses serviços, sem passar pela AAUTS.</p>
+      As ligações que fizeres nela (WordPress, AVAI, Bluesky e YouTube, no modo «Só no telemóvel») ficam no armazenamento cifrado do
+      Android (Keystore) e são usadas só para publicar o que confirmares, diretamente nesses serviços, sem passar pela AAUTS.
+      Só o login do YouTube usa a página de retorno e o serviço de ligações da AAUTS, como no computador (secções 5 e 6), que não guardam códigos nem tokens.</p>
     <p>Ao emparelhar o telemóvel com o computador (código QR em «Contas e ajustes → Telemóvel»), os dois aparelhos
       partilham uma chave de 256 bits que nunca sai deles. Tudo o que trocam — publicações agendadas no telemóvel (com as suas fotos ou vídeo),
       o estado de cada publicação, o planeamento do computador e o registo do que o telemóvel publicou — é cifrado
